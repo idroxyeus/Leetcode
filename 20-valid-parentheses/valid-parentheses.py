@@ -1,19 +1,18 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        stack=[]
+        stack = []
+        pairs = {')': '(', '}': '{', ']': '['}
         for char in s:
-            if char=='(' or char=='{' or char=='[':
-                stack.append(char)
+            if char in pairs:
+                if not stack or stack.pop() != pairs[char]:
+                    return False
             else:
-                if not stack:
-                    return False
-                if char=='}' and stack[-1]=='{':
-                    stack.pop()
-                elif char==')' and stack[-1]=='(':
-                    stack.pop()
-                elif char==']' and stack[-1]=='[':
-                    stack.pop()
-                else:
-                    return False
-        return len(stack)==0
-        
+                stack.append(char)
+        return not stack
+# Complexity
+# Time: O(n)
+# Every bracket is pushed/popped at most once.
+# Space: O(n)
+# Worst case: "(((((((("
+
+# You cannot do better than O(n) time because every character must be examined at least once
