@@ -2,7 +2,7 @@ class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
         s=[]
         for i in tokens:
-            if i=='+' or i=='-' or i=='*' or i=='/':
+            if i in '+-*/':
                 b=s.pop()
                 a=s.pop()
                 if i=='+':
