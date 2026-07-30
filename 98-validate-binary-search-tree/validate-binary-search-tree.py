@@ -14,5 +14,5 @@ class Solution:
             l=val(node.left,left,node.val)
             r=val(node.right,node.val,right)
             return l and r
-        return val(root,float(-inf),float(inf))
+        return val(root,float("-inf"),float("inf"))
             
