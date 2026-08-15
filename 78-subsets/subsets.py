@@ -1,0 +1,12 @@
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res,sub=[],[]
+        def back(i):
+            if i>=len(nums):
+                return res.append(sub.copy())
+            sub.append(nums[i])
+            back(i+1)
+            sub.pop()
+            back(i+1)
+        back(0)
+        return res
