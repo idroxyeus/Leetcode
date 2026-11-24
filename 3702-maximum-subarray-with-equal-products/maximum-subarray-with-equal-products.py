@@ -1,21 +1,23 @@
-import math
 from typing import List
 
 
 class Solution:
 
   def maxLength(self, nums: List[int]) -> int:
-    n = len(nums)
-    ans = 2 if n >= 2 else 1
+    # Bitmask of prime factors {2: 1, 3: 2, 5: 4, 7: 8} for indices 0..10
+    MASKS = (0, 0, 1, 2, 1, 4, 3, 8, 1, 2, 5)
+
+    ans = 2
     l = 0
-    prod = 1
+    mask = 0
 
-    for r in range(n):
-      while math.gcd(prod, nums[r]) > 1:
-        prod //= nums[l]
+    for r, x in enumerate(nums):
+      m = MASKS[x]
+      while mask & m:
+        mask ^= MASKS[nums[l]]
         l += 1
-
-      prod *= nums[r]  # Indented inside the for loop
-      ans = max(ans, r - l + 1)  # Indented inside the for loop
+      mask |= m
+      if r - l + 1 > ans:
+        ans = r - l + 1
 
     return ans
