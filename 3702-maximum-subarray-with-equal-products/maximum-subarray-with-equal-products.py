@@ -1,21 +1,21 @@
+import math
+from typing import List
+
+
 class Solution:
-    def maxLength(self, nums: List[int]) -> int:
-        n = len(nums)
 
-        ans = 0
-        max_possible_prod = math.lcm(*nums) * max(nums)
+  def maxLength(self, nums: List[int]) -> int:
+    n = len(nums)
+    ans = 2 if n >= 2 else 1
+    l = 0
+    prod = 1
 
-        for i in range(n):
-            prod = 1
-            g = 0
-            l = 1
-            for j in range(i, n):
-                prod *= nums[j]
-                if prod > max_possible_prod:
-                    break
-                g = math.gcd(g, nums[j])
-                l = math.lcm(l, nums[j])
-                if prod == g * l:
-                    ans = max(ans, j - i + 1)
+    for r in range(n):
+      while math.gcd(prod, nums[r]) > 1:
+        prod //= nums[l]
+        l += 1
 
-        return ans
+      prod *= nums[r]  # Indented inside the for loop
+      ans = max(ans, r - l + 1)  # Indented inside the for loop
+
+    return ans
